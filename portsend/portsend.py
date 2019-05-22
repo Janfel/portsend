@@ -22,7 +22,7 @@ import socket
 import tarfile
 
 
-def send(files: List[str], port: int = 1199):
+def send(files: List[str], port: int):
     with socket.socket() as sock:
         sock.bind(("127.0.0.1", port))  # TODO Port configurable
         sock.listen()
@@ -35,7 +35,7 @@ def send(files: List[str], port: int = 1199):
                     tar.add(file)
 
 
-def receive(host: str, port: int = 1199, destdir: str = "."):  # TODO Destdir config
+def receive(host: str, port: int, destdir: str):  # TODO Destdir config
     with socket.socket() as sock:
         sock.connect((host, port))
         with sock.makefile("rb") as stream:

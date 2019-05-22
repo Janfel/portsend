@@ -19,6 +19,8 @@
 import argparse
 from portsend.portsend import send, receive
 
+DEFAULT_PORT = 1199
+
 
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -29,8 +31,16 @@ def _parse_args() -> argparse.Namespace:
     recv_parser = subgroup.add_parser("recv", description="Receive a file from a remote port.")
 
     send_parser.add_argument("files", nargs="+", help="the files and directories you want to send")
+    send_parser.add_argument(
+        "-p", "--port", default=DEFAULT_PORT, type=int, help="override the default port"
+    )
     recv_parser.add_argument("hostname", help="the hostname or IP of the sending machine")
-    recv_parser.add_argument("port", type=int, help="the port the data is being sent over")
+    recv_parser.add_argument(
+        "-p", "--port", default=DEFAULT_PORT, type=int, help="override the default port"
+    )
+    recv_parser.add_argument(
+        "-o", "--outdir", default=".", help="the directory where the files are extracted"
+    )
     return parser.parse_args()
 
 
@@ -38,9 +48,9 @@ def main():
     """The main entry point of portsend."""
     args = _parse_args()
     if args.operation == "send":
-        send(args.files)
+        send(args.files, args.port)
     elif args.operation == "recv":
-        receive(args.hostname, args.port)
+        receive(args.hostname, args.port, args.outdir)
 
 
 if __name__ == "__main__":
