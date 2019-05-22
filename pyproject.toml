@@ -7,5 +7,8 @@ module = "portsend"
 author = "Jan Felix Langenbach"
 author-email = "o.hase3@gmail.com"
 home-page = "https://github.com/Janfel/Portsend"
+description-file = "README.md"
 classifiers = ["License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
 
+[tool.flit.scripts]
+portsend = "portsend.__main__:main"
