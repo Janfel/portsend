@@ -19,6 +19,7 @@
 from __future__ import annotations
 from typing import List
 import socket
+import tarfile
 
 
 def send(files: List[str], port: int = 1199):
@@ -28,6 +29,10 @@ def send(files: List[str], port: int = 1199):
         print(f"Listening on {socket.gethostname()}:{sock.getsockname()[1]}")
         conn, addr = sock.accept()
         print(conn, addr)
+        with sock.makefile("wb") as stream:
+            with tarfile.open(mode="w|xz", fileobj=stream) as tar:
+                for file in files:
+                    tar.add(file)
 
 
 def receive(host: str, port: int):
