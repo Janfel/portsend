@@ -29,7 +29,7 @@ def send(files: List[str], port: int):
         print(f"Listening on {socket.gethostname()}:{sock.getsockname()[1]}")
         conn, addr = sock.accept()
         print(conn, addr)
-        with sock.makefile("wb") as stream:
+        with conn.makefile("wb") as stream:
             with tarfile.open(mode="w|xz", fileobj=stream) as tar:
                 for file in files:
                     tar.add(file)
