@@ -24,7 +24,7 @@ import tarfile
 
 def send(files: List[str], port: int):
     with socket.socket() as sock:
-        sock.bind(("127.0.0.1", port))  # TODO Port configurable
+        sock.bind(("127.0.0.1", port))
         sock.listen()
         print(f"Listening on {socket.gethostname()}:{sock.getsockname()[1]}")
         conn, addr = sock.accept()
@@ -35,7 +35,7 @@ def send(files: List[str], port: int):
                     tar.add(file)
 
 
-def receive(host: str, port: int, destdir: str):  # TODO Destdir config
+def receive(host: str, port: int, destdir: str):
     with socket.socket() as sock:
         sock.connect((host, port))
         with sock.makefile("rb") as stream:
