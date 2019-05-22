@@ -30,6 +30,7 @@ DEFAULT_PORT = 1199
 
 
 def send(files: List[str], port: int):
+    """Publish the files over the specified port and wait for a receiver."""
     with socket.socket() as sock:
         sock.bind(("127.0.0.1", port))
         sock.listen()
@@ -43,6 +44,7 @@ def send(files: List[str], port: int):
 
 
 def receive(host: str, port: int, destdir: str):
+    """Connect to the host on the specified port and attempt to download a transmission."""
     with socket.socket() as sock:
         sock.connect((host, port))
         with sock.makefile("rb") as stream:
