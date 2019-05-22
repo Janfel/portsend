@@ -18,10 +18,16 @@
 
 from __future__ import annotations
 from typing import List
+import socket
 
 
-def send(files: List[str]):
-    pass
+def send(files: List[str], port: int = 1199):
+    with socket.socket() as sock:
+        sock.bind(("127.0.0.1", port))  # TODO Port configurable
+        sock.listen()
+        print(f"Listening on {socket.gethostname()}:{sock.getsockname()[1]}")
+        conn, addr = sock.accept()
+        print(conn, addr)
 
 
 def receive(host: str, port: int):
