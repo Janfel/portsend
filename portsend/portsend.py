@@ -17,7 +17,7 @@
 """The main library of portsend."""
 
 from __future__ import annotations
-from typing import Optional, List
+from typing import List
 
 
 def send(files: List[str]):
