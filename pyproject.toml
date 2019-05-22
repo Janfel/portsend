@@ -1,0 +1,11 @@
+[build-system]
+requires = ["flit"]
+build-backend = "flit.buildapi"
+
+[tool.flit.metadata]
+module = "Portsend"
+author = "Jan Felix Langenbach"
+author-email = "o.hase3@gmail.com"
+home-page = "https://github.com/Janfel/Portsend"
+classifiers = ["License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
+
