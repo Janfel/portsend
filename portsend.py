@@ -1,6 +1,6 @@
 # Copyright (C) 2019 Jan Felix Langenbach
 #
-# This file is part of portsend.
+# This file is part of Portsend.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,12 +14,39 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http: //www.gnu.org/licenses/>.
-"""The main module of portsend."""
+"""A Python script for quickly sharing files over a local network."""
+
+from __future__ import annotations
 
 import argparse
-from portsend.portsend import send, receive
+import socket
+import tarfile
 
+from typing import List
+
+__version__ = "0.1.0"
 DEFAULT_PORT = 1199
+
+
+def send(files: List[str], port: int):
+    with socket.socket() as sock:
+        sock.bind(("127.0.0.1", port))
+        sock.listen()
+        print(f"Listening on {socket.gethostname()}:{sock.getsockname()[1]}")
+        conn, addr = sock.accept()
+        print(conn, addr)
+        with conn.makefile("wb") as stream:
+            with tarfile.open(mode="w|xz", fileobj=stream) as tar:
+                for file in files:
+                    tar.add(file)
+
+
+def receive(host: str, port: int, destdir: str):
+    with socket.socket() as sock:
+        sock.connect((host, port))
+        with sock.makefile("rb") as stream:
+            with tarfile.open(mode="r|*", fileobj=stream) as tar:
+                tar.extractall(destdir)
 
 
 def _parse_args() -> argparse.Namespace:
