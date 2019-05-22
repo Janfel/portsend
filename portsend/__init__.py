@@ -15,3 +15,5 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http: //www.gnu.org/licenses/>.
 """A Python script for quickly sharing files over a local network."""
+
+__version__ = "0.1.0"
