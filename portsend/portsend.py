@@ -18,11 +18,18 @@
 
 from __future__ import annotations
 from typing import List
+import socket
+import tarfile
 
 
 def send(files: List[str]):
     pass
 
 
-def receive(host: str, port: int):
-    pass
+def receive(host: str, port: int = 1199, destdir: str = "."):  # TODO Destdir config
+    with socket.socket() as sock:
+        sock.connect((host, port))
+        with sock.makefile("rb") as stream:
+            with tarfile.open(mode="r|*", fileobj=stream) as tar:
+                tar.extractall(destdir)
+
