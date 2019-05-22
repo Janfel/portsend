@@ -16,9 +16,31 @@
 # along with this program.  If not, see <http: //www.gnu.org/licenses/>.
 """The main module of portsend."""
 
+import argparse
+from portsend.portsend import send, receive
+
+
+def _parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="A Python script for quickly sharing files over a local network."
+    )
+    subgroup = parser.add_subparsers(dest="operation")
+    send_parser = subgroup.add_parser("send", description="Send a file over a local port.")
+    recv_parser = subgroup.add_parser("recv", description="Receive a file from a remote port.")
+
+    send_parser.add_argument("files", nargs="+", help="the files and directories you want to send")
+    recv_parser.add_argument("hostname", help="the hostname or IP of the sending machine")
+    recv_parser.add_argument("port", type=int, help="the port the data is being sent over")
+    return parser.parse_args()
+
 
 def main():
     """The main entry point of portsend."""
+    args = _parse_args()
+    if args.operation == "send":
+        send(args.files)
+    elif args.operation == "recv":
+        receive(args.hostname, args.port)
 
 
 if __name__ == "__main__":
