@@ -44,7 +44,8 @@ def send(files: List[str], port: int) -> None:
         out_port = sock.getsockname()[1]
         out_port_str = f" --port {out_port}" if out_port != DEFAULT_PORT else ""
         print(
-            f"Listening on port: {out_port}\nExecute `portsend recv {socket.gethostname()}{out_port_str}` on the remote machine"
+            f"Listening on port: {out_port}\n\
+            Execute `portsend recv {socket.gethostname()}{out_port_str}` on the remote machine"
         )
         conn, addr = sock.accept()
         print(f"Sending files to: {socket.gethostbyaddr(addr[0])[0]} at {addr[0]}")
