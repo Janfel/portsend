@@ -20,6 +20,7 @@
 from __future__ import annotations
 
 import argparse
+import errno
 import socket
 import tarfile
 
@@ -32,7 +33,13 @@ DEFAULT_PORT = 1199
 def send(files: List[str], port: int):
     """Publish the files over the specified port and wait for a receiver."""
     with socket.socket() as sock:
+        try:
         sock.bind(("127.0.0.1", port))
+        except socket.error as err:
+            if err.errno == errno.EADDRINUSE:
+                print("Default port already in use. Switching ports...")
+            else:
+                raise err
         sock.listen()
         print(f"Listening on {socket.gethostname()}:{sock.getsockname()[1]}")
         conn, addr = sock.accept()
