@@ -71,7 +71,12 @@ def main() -> None:
     )
     subgroup = parser.add_subparsers(dest="operation")
     send_parser = subgroup.add_parser("send", description="Send a file over a local port.")
-    recv_parser = subgroup.add_parser("recv", description="Receive a file from a remote port.")
+    recv_parser = subgroup.add_parser(
+        "recv",
+        description="Receive a file from a remote port.",
+        epilog="If you are receiving a file from your local machine, \
+            you must use `localhost` as hostname.",
+    )
 
     send_parser.add_argument("files", nargs="+", help="the files and directories you want to send")
     send_parser.add_argument(
