@@ -4,6 +4,5 @@
 
 ## TODO
 
-- Better logging
 - Better README
 - Qt Gui
