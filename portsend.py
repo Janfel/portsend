@@ -30,7 +30,7 @@ __version__ = "0.1.0"
 DEFAULT_PORT = 1199
 
 
-def send(files: List[str], port: int):
+def send(files: List[str], port: int) -> None:
     """Publish the files over the specified port and wait for a receiver."""
     with socket.socket() as sock:
         try:
@@ -54,7 +54,7 @@ def send(files: List[str], port: int):
                     tar.add(file)
 
 
-def receive(host: str, port: int, destdir: str):
+def receive(host: str, port: int, destdir: str) -> None:
     """Connect to the host on the specified port and attempt to download a transmission."""
     with socket.socket() as sock:
         sock.connect((host, port))
@@ -63,7 +63,7 @@ def receive(host: str, port: int, destdir: str):
                 tar.extractall(destdir)
 
 
-def main():
+def main() -> None:
     """The main entry point of portsend."""
     parser = argparse.ArgumentParser(
         description="A Python script for quickly sharing files over a local network."
