@@ -63,7 +63,8 @@ def receive(host: str, port: int, destdir: str):
                 tar.extractall(destdir)
 
 
-def _parse_args() -> argparse.Namespace:
+def main():
+    """The main entry point of portsend."""
     parser = argparse.ArgumentParser(
         description="A Python script for quickly sharing files over a local network."
     )
@@ -82,16 +83,13 @@ def _parse_args() -> argparse.Namespace:
     recv_parser.add_argument(
         "-o", "--outdir", default=".", help="the directory where the files are extracted"
     )
-    return parser.parse_args()
-
-
-def main():
-    """The main entry point of portsend."""
-    args = _parse_args()
+    args = parser.parse_args()
     if args.operation == "send":
         send(args.files, args.port)
     elif args.operation == "recv":
         receive(args.hostname, args.port, args.outdir)
+    else:
+        parser.print_help()
 
 
 if __name__ == "__main__":
