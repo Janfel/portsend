@@ -21,7 +21,7 @@ portsend send myfile.txt mydir
 
 This will result in an output like this:
 
-```
+```plain
 Listening on port: 1199
 Execute `portsend recv MyComputer` on the remote machine
 ```
