@@ -45,7 +45,7 @@ def send(files: List[str], port: int) -> None:
         out_port_str = f" --port {out_port}" if out_port != DEFAULT_PORT else ""
         print(
             f"Listening on port: {out_port}\n\
-            Execute `portsend recv {socket.gethostname()}{out_port_str}` on the remote machine"
+Execute `portsend recv {socket.gethostname()}{out_port_str}` on the remote machine"
         )
         conn, addr = sock.accept()
         print(f"Sending files to: {socket.gethostbyaddr(addr[0])[0]} at {addr[0]}")
@@ -75,7 +75,7 @@ def main() -> None:
         "recv",
         description="Receive a file from a remote port.",
         epilog="If you are receiving a file from your local machine, \
-            you must use `localhost` as hostname.",
+you must use `localhost` as hostname.",
     )
 
     send_parser.add_argument("files", nargs="+", help="the files and directories you want to send")
